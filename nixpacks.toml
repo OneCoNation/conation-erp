@@ -1,0 +1,9 @@
+[providers]
+php = true
+
+[variables]
+NIXPACKS_PHP_ROOT_DIR = "htdocs"
+NIXPACKS_PHP_FALLBACK_VERSION = "8.1"
+
+[start]
+cmd = "php -S 0.0.0.0:${PORT} -t htdocs"

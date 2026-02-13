@@ -4,17 +4,12 @@
 // Auto-configured using environment variables
 //
 
-<<<<<<< HEAD
-// Main URL - auto-detect from Railway
-$dolibarr_main_url_root='https://'.getenv('RAILWAY_PUBLIC_DOMAIN');
-=======
 // Main URL - priority: DOLI_URL_ROOT > RAILWAY_PUBLIC_DOMAIN
 $dolibarr_main_url_root = getenv('DOLI_URL_ROOT');
 if (empty($dolibarr_main_url_root)) {
     $dolibarr_main_url_root = 'https://' . getenv('RAILWAY_PUBLIC_DOMAIN');
 }
 $dolibarr_main_url_root = rtrim($dolibarr_main_url_root, '/');
->>>>>>> 85cbe14da86 (Update Dolibarr config to support custom domain DOLI_URL_ROOT)
 $dolibarr_main_document_root='/app/htdocs';
 $dolibarr_main_url_root_alt='/custom';
 $dolibarr_main_document_root_alt='/app/htdocs/custom';

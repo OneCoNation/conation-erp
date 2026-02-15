@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:4.0
+PRODID:Dolibarr 22.0.4
+UID:DOL-USERID-0ed78fad-1
+N;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:SuperAdmin;;;;
+FN:SuperAdmin
+ORG;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:PT. Coffee Nation Prosperity
+URL:conation.co.id
+ADR;TYPE=WORK:;;Keputih, Sukolilo, Surabaya, Jawa Timur;Surabaya;Jawa Timur;;Indonesia
+EMAIL;TYPE=WORK:one.conation@gmail.com
+REV:20260205T000133Z
+END:VCARD

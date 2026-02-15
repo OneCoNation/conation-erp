@@ -9176,8 +9176,8 @@ div.flot-text .flot-tick-label .tickLabel, .fa-color-unset {
 }
 /* ============================================================================== */
 /* ============================================================================== */
-/* GSM THEME V6 - FULLY INTEGRATED (User CSS + Theme Source)                      */
-/* No external Display CSS needed. Everything is here.                             */
+/* GSM THEME V6.1 - FLUSH SIDEBAR + TITLE WRAPS CONTENT                          */
+/* Fully Integrated — No external Display CSS needed.                             */
 /* ============================================================================== */
 
 /* GSM Custom Properties */
@@ -9237,7 +9237,7 @@ body {
     overflow-x: hidden !important;
 }
 
-/* Popup/Modal Fix — ensure they're opaque on new background */
+/* Popup/Modal Fix */
 .ui-dialog,
 .ui-widget-content,
 .ui-dialog-content,
@@ -9249,7 +9249,7 @@ body {
     border-radius: var(--radius-md) !important;
 }
 
-/* Custom Scrollbar (Webkit) */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -9307,13 +9307,11 @@ div.login_block a {
 }
 
 /* ============================================================================== */
-/* 3. CHEVRON SIDEBAR                                                             */
-/*    Default: Hidden, rectangular > button at top-left corner                    */
-/*    Hover: Expands full menu, solid white background, floats over content        */
+/* 3. CHEVRON SIDEBAR — FLUSH LEFT (no gap!)                                      */
 /* ============================================================================== */
 @media screen and (min-width: 992px) {
 
-    /* Sidebar: invisible by default */
+    /* Sidebar: invisible, flush left */
     div.vmenu {
         width: 0px !important;
         min-width: 0px !important;
@@ -9323,43 +9321,40 @@ div.login_block a {
         background: var(--bg-sidebar) !important;
         position: fixed !important;
         height: calc(100vh - 50px) !important;
-        left: 0;
+        left: 0 !important;
         top: 50px;
         border-right: none !important;
-        padding-top: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
         transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
         box-shadow: none;
     }
 
-    /* Chevron > button — rectangular, flush left, rounded right side only */
+    /* Chevron > — rectangular, FLUSH to left edge (left:0), no gap */
     div.vmenu::before {
         content: '\276F';
         display: flex !important;
         align-items: center;
         justify-content: center;
-        width: 24px;
+        width: 22px;
         height: 40px;
-        font-size: 13px;
+        font-size: 12px;
         font-weight: bold;
         color: var(--primary-color);
         cursor: pointer;
         background: var(--bg-surface);
         border: 1px solid var(--border-color);
-        border-left: none;
+        border-left: none !important;
         border-radius: 0 8px 8px 0;
         position: fixed;
-        top: 52px;
-        left: 0;
+        top: 50px;
+        left: 0 !important;
         z-index: 1100;
-        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.08);
+        box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.06);
         transition: left 0.25s ease, background 0.2s ease;
     }
 
-    div.vmenu::before:hover {
-        background: #FFF5F2;
-    }
-
-    /* Default: hide ALL sidebar content */
+    /* Hide ALL sidebar content by default */
     div.vmenu>* {
         opacity: 0 !important;
         visibility: hidden !important;
@@ -9370,23 +9365,26 @@ div.login_block a {
         transition: opacity 0.15s ease;
     }
 
-    /* ---- HOVER: Expand full sidebar ---- */
+    /* ---- HOVER: Expand sidebar — FLUSH LEFT ---- */
     div.vmenu:hover {
         width: 260px !important;
+        left: 0 !important;
         background: var(--bg-sidebar) !important;
         border-right: 1px solid var(--border-color) !important;
         box-shadow: 4px 0 24px rgba(0, 0, 0, 0.10) !important;
         overflow-y: auto !important;
         padding-top: 44px !important;
+        padding-left: 0 !important;
+        margin-left: 0 !important;
     }
 
-    /* Chevron flips and moves right on expand */
+    /* Chevron flips */
     div.vmenu:hover::before {
         content: '\276E';
-        left: 234px;
+        left: 236px !important;
     }
 
-    /* Show content on hover */
+    /* Show content */
     div.vmenu:hover>* {
         opacity: 1 !important;
         visibility: visible !important;
@@ -9396,7 +9394,7 @@ div.login_block a {
         padding: initial !important;
     }
 
-    /* Sidebar category titles */
+    /* Sidebar titles */
     div.vmenu:hover .titre {
         font-family: var(--font-heading) !important;
         color: var(--text-light) !important;
@@ -9439,14 +9437,12 @@ div.login_block a {
         border-left-color: var(--primary-color) !important;
     }
 
-    /* Sidebar search/bookmarks */
     div.vmenu:hover .blockvmenusearch,
     div.vmenu:hover .blockvmenubookmarks {
         display: block !important;
         padding: 8px 12px !important;
     }
 
-    /* Sidebar sub-menu items */
     div.vmenu:hover .menu_titre a {
         display: flex !important;
         align-items: center !important;
@@ -9488,7 +9484,7 @@ div.login_block a {
         border-left-color: var(--accent-color) !important;
     }
 
-    /* Custom sidebar scrollbar */
+    /* Sidebar scrollbar */
     div.vmenu::-webkit-scrollbar {
         width: 4px;
     }
@@ -9511,12 +9507,74 @@ div.login_block a {
 }
 
 /* ============================================================================== */
-/* 4. MAIN CONTENT CARDS — with fadeInUp animation                                */
+/* 4. MAIN CONTENT — .fiche wraps TITLE + CONTENT as one card                     */
+/*    Title = card header, child .box elements = flat content inside               */
 /* ============================================================================== */
 
-#id-right div.fiche,
-#id-right .tabBar,
-#id-right .box {
+/* .fiche = THE main card container (wraps title + all content) */
+#id-right div.fiche {
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-md) !important;
+    background-color: var(--bg-surface) !important;
+    box-shadow: var(--shadow-card) !important;
+    padding: 0 !important;
+    margin-bottom: 24px !important;
+    animation: fadeInUp 0.6s ease-out forwards;
+    overflow: hidden;
+}
+
+/* .titre INSIDE .fiche = card header */
+#id-right div.fiche>.titre,
+#id-right div.fiche .titre:first-child,
+#id-right div.fiche>div>.titre:first-child {
+    font-family: var(--font-heading) !important;
+    font-size: 1.35rem !important;
+    font-weight: 700 !important;
+    color: var(--text-main) !important;
+    letter-spacing: -0.02em;
+    background: linear-gradient(to bottom, #f8fafc, var(--bg-surface)) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    box-shadow: none !important;
+    padding: 20px 24px 16px !important;
+    margin: 0 !important;
+    display: block !important;
+    text-shadow: none !important;
+}
+
+/* Content inside .fiche gets consistent padding */
+#id-right div.fiche>div:not(.titre),
+#id-right div.fiche>table,
+#id-right div.fiche>form,
+#id-right div.fiche .tabBar,
+#id-right div.fiche .fichehalfleft,
+#id-right div.fiche .fichehalfright {
+    padding: 20px 24px !important;
+}
+
+/* .box INSIDE .fiche = flat/subtle (no heavy card styling, avoid nested cards) */
+#id-right div.fiche .box {
+    border: 1px solid #f1f5f9 !important;
+    border-radius: var(--radius-sm) !important;
+    background-color: #fafbfc !important;
+    box-shadow: none !important;
+    padding: 16px !important;
+    margin-bottom: 16px !important;
+    transition: var(--trans-fast);
+}
+
+#id-right div.fiche .box:hover {
+    background-color: #f8fafc !important;
+    border-color: var(--border-color) !important;
+    box-shadow: var(--shadow-sm) !important;
+    transform: none;
+}
+
+/* .box OUTSIDE .fiche = standalone card (keep full card styling) */
+#id-right>.box,
+#id-right>div>.box:not(.fiche .box) {
     border: 1px solid var(--border-color) !important;
     border-radius: var(--radius-md) !important;
     background-color: var(--bg-surface) !important;
@@ -9524,6 +9582,20 @@ div.login_block a {
     padding: 24px !important;
     margin-bottom: 24px !important;
     animation: fadeInUp 0.6s ease-out forwards;
+    transition: var(--trans-smooth);
+}
+
+#id-right>.box:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-float) !important;
+}
+
+/* tabBar and fichehalves */
+#id-right .tabBar {
+    border-radius: var(--radius-md) !important;
+    border: 1px solid var(--border-color) !important;
+    background-color: var(--bg-surface) !important;
+    box-shadow: var(--shadow-card) !important;
 }
 
 #id-right .fichehalfleft,
@@ -9533,16 +9605,7 @@ div.login_block a {
     border: 1px solid var(--border-color) !important;
 }
 
-/* Dashboard Widgets */
-#id-right .box {
-    transition: var(--trans-smooth);
-}
-
-#id-right .box:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-float) !important;
-}
-
+/* Box titles */
 .box_titre {
     border-bottom: 1px solid var(--border-color) !important;
     font-family: var(--font-heading) !important;
@@ -9552,31 +9615,22 @@ div.login_block a {
 }
 
 /* ============================================================================== */
-/* 5. SECTION TITLES — No container, transparent background                       */
+/* 5. SECTION TITLES (standalone, not inside .fiche)                              */
 /* ============================================================================== */
 
-/* All section titles: clean, no background/border/shadow */
-#id-right .titre,
-.titre.liste_titre_bydiv,
+div.titre.liste_titre_bydiv,
 div.titre,
-.ficheaddleft .titre,
-.fichehalfright .titre,
 td.titre {
     font-family: var(--font-heading) !important;
-    font-size: 1.5rem !important;
+    font-size: 1.35rem !important;
     font-weight: 700 !important;
     color: var(--text-main) !important;
     letter-spacing: -0.02em;
-    background: none !important;
-    background-color: transparent !important;
+    background: transparent !important;
     border: none !important;
     box-shadow: none !important;
-    padding: 0 !important;
     padding-left: 0 !important;
     text-shadow: none !important;
-    margin-bottom: 16px !important;
-    clear: both;
-    display: block !important;
 }
 
 div.titre.liste_titre_bydiv {
@@ -9584,7 +9638,7 @@ div.titre.liste_titre_bydiv {
 }
 
 /* ============================================================================== */
-/* 6. TABLES — Modern Data Display                                                */
+/* 6. TABLES                                                                      */
 /* ============================================================================== */
 
 table.liste,
@@ -9599,7 +9653,6 @@ table.liste,
     margin-bottom: 15px;
 }
 
-/* Table Header */
 tr.liste_titre,
 tr.liste_titre_sel {
     background: #f8fafc !important;
@@ -9618,7 +9671,6 @@ tr.liste_titre td {
     padding: 12px 15px !important;
 }
 
-/* Table Body */
 .pair,
 .impair,
 .oddeven {
@@ -9638,7 +9690,6 @@ td {
 .impair:hover,
 .oddeven:hover {
     background-color: #FFF9F5 !important;
-    cursor: default;
 }
 
 table.liste a {
@@ -9653,7 +9704,7 @@ table.liste a:hover {
 }
 
 /* ============================================================================== */
-/* 7. BUTTONS — Premium with Gradient & Hover Effects                             */
+/* 7. BUTTONS                                                                     */
 /* ============================================================================== */
 
 .button,
@@ -9684,7 +9735,6 @@ table.liste a:hover {
     transform: translateY(1px) scale(0.98);
 }
 
-/* Delete/Refuse — Red */
 .buttonRefuse,
 .butActionRefuse,
 .buttonDelete,
@@ -9696,10 +9746,8 @@ table.liste a:hover {
 .buttonRefuse:hover,
 .buttonDelete:hover {
     background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
-    box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.5);
 }
 
-/* Cancel — Neutral */
 .buttonCancel,
 .butActionCancel {
     background: #f3f4f6 !important;
@@ -9713,14 +9761,13 @@ table.liste a:hover {
     color: #000 !important;
 }
 
-/* Refused button */
 .butActionRefused {
     border-radius: var(--radius-sm) !important;
     padding: 12px 24px !important;
 }
 
 /* ============================================================================== */
-/* 8. FORMS — Input Fields with Focus Glow                                        */
+/* 8. FORMS                                                                       */
 /* ============================================================================== */
 
 input[type="text"],
@@ -9756,7 +9803,6 @@ textarea:focus {
     box-shadow: 0 0 0 4px rgba(132, 53, 35, 0.2) !important;
 }
 
-/* Select2 */
 .select2-container .select2-selection--single {
     height: 40px !important;
     border-color: var(--border-color) !important;
@@ -9769,7 +9815,7 @@ textarea:focus {
 }
 
 /* ============================================================================== */
-/* 9. TABS — Underline Style                                                      */
+/* 9. TABS                                                                        */
 /* ============================================================================== */
 
 .tabs {
@@ -9795,7 +9841,6 @@ textarea:focus {
 }
 
 .tab.active {
-    background: transparent !important;
     border-bottom: 3px solid var(--primary-color) !important;
     color: var(--primary-color) !important;
     font-weight: 700;
@@ -9808,7 +9853,6 @@ div.tabs a.tabTitle {
 
 div.tabs a.tab {
     border-radius: var(--radius-sm) var(--radius-sm) 0 0 !important;
-    transition: background-color 0.2s ease;
 }
 
 /* ============================================================================== */
@@ -9854,7 +9898,7 @@ span[class*="status"] {
 }
 
 /* ============================================================================== */
-/* 12. BREADCRUMB & LINKS                                                         */
+/* 12. LINKS & BREADCRUMB                                                         */
 /* ============================================================================== */
 
 .refid,
@@ -9881,7 +9925,7 @@ a:not(.butAction):not(.button):not(.tabTitle):hover {
 }
 
 /* ============================================================================== */
-/* 14. RESPONSIVE — Intermediate Desktop (992-1200px)                             */
+/* 14. RESPONSIVE — Intermediate (992-1200px)                                     */
 /* ============================================================================== */
 @media screen and (min-width: 992px) and (max-width: 1200px) {
 

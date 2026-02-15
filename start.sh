@@ -4,36 +4,30 @@
 echo "Checking documents directory..."
 mkdir -p /app/documents
 
-# 2. Sinkronisasi File Konfigurasi
-# Kita pastikan conf.php berada di tempat yang benar (htdocs/conf/conf.php)
-if [ -f "/app/htdocs/conf/conf.php" ]; then
-    echo "Using existing htdocs/conf/conf.php"
-else
-    echo "Warning: htdocs/conf/conf.php not found! Creating from environment..."
-    # Jika file tidak ada, kita buat folder dan file kosong agar tidak error
+# 2. Pastikan file conf.php ada
+if [ ! -f "/app/htdocs/conf/conf.php" ]; then
+    echo "Warning: htdocs/conf/conf.php not found! Creating dummy..."
     mkdir -p /app/htdocs/conf
     touch /app/htdocs/conf/conf.php
 fi
 
-# 3. Auto-Heal Security (Fix Permission & Install Lock)
+# 3. JURUS KUNCI: Set Permission dengan Benar (User www-data)
+# Kita ubah pemilik file menjadi 'root' agar webserver (yang berjalan sebagai user lain)
+# BENAR-BENAR tidak bisa mengeditnya.
 echo "Applying security fixes..."
 touch /app/documents/install.lock
 chmod -R 777 /app/documents
-chmod 444 /app/htdocs/conf/conf.php || true
 
-# 4. Jalankan Service Utama (Nginx & PHP-FPM)
-# Nixpacks biasanya menggunakan perintah start bawaan, 
-# tapi jika Anda menggunakan start.sh manual, jalankan perintah ini:
+# Trik menghilangkan warning conf.php:
+# Ubah permission ke 0444 (Read Only Everyone)
+chmod 0444 /app/htdocs/conf/conf.php
 
-# Check if Dolibarr install lock exists
-if [ -f "/app/documents/install.lock" ]; then
-    echo "Dolibarr is already installed (install.lock found)"
-else
-    echo "WARNING: Dolibarr installation not complete yet."
-    echo "Please visit https://${RAILWAY_PUBLIC_DOMAIN}/install/ to complete setup."
-    echo "After installation, an install.lock file will be created."
-fi
+# 4. Jalankan Nginx & PHP-FPM (Mode Production)
+# Bukan 'php -S' lagi!
+echo "Starting Nginx and PHP-FPM..."
 
-# Start PHP built-in server
-echo "Starting PHP server on port ${PORT:-8080}..."
-exec php -S 0.0.0.0:${PORT:-8080} -t /app/htdocs
+# Start PHP-FPM in background
+php-fpm -D
+
+# Start Nginx in foreground
+nginx -g "daemon off;"

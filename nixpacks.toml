@@ -1,8 +1,13 @@
+# File: nixpacks.toml
+# Optimized for Dolibarr 2026 (Nginx + PHP-FPM)
+
 providers = ["php"]
 
 [phases.setup]
 nixPkgs = [
     "php83", 
+    "php83Extensions.opcache",  # WAJIB: Agar Dolibarr tidak lemot
+    "php83Extensions.mysqlnd",  # WAJIB: Driver Database Native (Lebih Cepat)
     "php83Extensions.mysqli", 
     "php83Extensions.pdo_mysql", 
     "php83Extensions.gd", 
@@ -11,9 +16,9 @@ nixPkgs = [
     "php83Extensions.zip", 
     "php83Extensions.mbstring", 
     "php83Extensions.imap", 
-    "php83Extensions.xml",      # Penting untuk Dolibarr API/Import
-    "php83Extensions.soap",     # Penting untuk Web Services
-    "php83Extensions.calendar", # Penting untuk modul Agenda
+    "php83Extensions.xml",      
+    "php83Extensions.soap",     
+    "php83Extensions.calendar", 
     "nginx", 
     "libmysqlclient", 
     "nodejs_18"
@@ -22,24 +27,30 @@ nixLibs = ["libmysqlclient"]
 
 [phases.install]
 cmds = [
-    # Membuat folder log Nginx
+    # 1. Siapkan folder Log Nginx
     "mkdir -p /var/log/nginx",
     "mkdir -p /var/cache/nginx",
     
-    # Membuat folder dokumen & File Kunci (PENTING!)
+    # 2. Siapkan folder Dokumen & Kunci
     "mkdir -p /app/documents",
     "touch /app/documents/install.lock",
     
-    # Memberikan izin tulis penuh ke folder dokumen
+    # 3. Izin Folder (PENTING)
     "chmod -R 777 /app/documents",
     
-    # Memberikan izin eksekusi ke script start (jika ada)
+    # 4. Pastikan script start bisa dieksekusi
     "chmod +x /app/start.sh"
 ]
 
 [variables]
+# Menunjuk ke folder htdocs (sesuai struktur repo Anda)
 NIXPACKS_PHP_ROOT_DIR = "htdocs"
 NIXPACKS_PHP_FALLBACK_VERSION = "8.3"
+
+# Opcache Tuning (Agar ERP ngebut)
+PHP_OPCACHE_ENABLE = "1"
+PHP_OPCACHE_MEMORY_CONSUMPTION = "128"
+PHP_OPCACHE_VALIDATE_TIMESTAMPS = "0" 
 
 [start]
 cmd = "bash /app/start.sh"

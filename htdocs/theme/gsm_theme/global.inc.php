@@ -9175,7 +9175,8 @@ div.flot-text .flot-tick-label .tickLabel, .fa-color-unset {
 
 }
 /* ============================================================================== */
-/* GSM THEME V3 - ALL AUDIT FIXES APPLIED                                         */
+/* ============================================================================== */
+/* GSM THEME V4 - HAMBURGER SIDEBAR + ORIGINAL NAVBAR                             */
 /* ============================================================================== */
 
 /* 1. Typography & Reset */
@@ -9197,7 +9198,7 @@ th {
     font-family: 'Montserrat', sans-serif !important;
 }
 
-/* 2. Modern Components — scoped to #id-right to avoid sidebar conflicts */
+/* 2. Modern Components — scoped to #id-right */
 #id-right div.fiche,
 #id-right .tabBar,
 #id-right .box,
@@ -9213,7 +9214,7 @@ th {
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* 3. Inputs & Forms — targeted types only */
+/* 3. Inputs & Forms — targeted types */
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -9240,7 +9241,7 @@ textarea:focus {
     border-color: #843523 !important;
 }
 
-/* Select2 Contrast Fix */
+/* Select2 Fix */
 .select2-container--default .select2-selection--single {
     border-color: #e2e8f0 !important;
     height: 38px !important;
@@ -9282,96 +9283,126 @@ textarea:focus {
     margin-bottom: 15px;
 }
 
-/* 6. ICON-ONLY SIDEBAR — Permanently collapsed, NO expand on hover */
+/* ============================================================================== */
+/* 6. HAMBURGER SIDEBAR                                                           */
+/*    Default: Fully hidden, only hamburger icon visible at top-left               */
+/*    Hover: Expands full menu, floats over content, solid background              */
+/* ============================================================================== */
 @media screen and (min-width: 992px) {
 
-    /* Sidebar: fixed, icon-only, 50px wide */
+    /* Sidebar container: thin strip with hamburger trigger */
     div.vmenu {
-        width: 50px !important;
-        min-width: 50px !important;
-        max-width: 50px !important;
+        width: 42px !important;
+        min-width: 42px !important;
         overflow: hidden !important;
         white-space: nowrap !important;
-        z-index: 1000 !important;
-        background: rgba(255, 255, 255, 0.97) !important;
-        backdrop-filter: blur(10px);
+        z-index: 1050 !important;
+        background: #ffffff !important;
         position: fixed !important;
         height: calc(100vh - 50px) !important;
         left: 0;
         top: 50px;
         border-right: 1px solid #e2e8f0;
-        padding-top: 8px !important;
+        padding-top: 0 !important;
+        transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: none;
     }
 
-    /* COMPLETELY HIDE all text in sidebar — icon only */
-    div.vmenu .blockvmenusearch,
-    div.vmenu .blockvmenubookmarks,
-    div.vmenu .menu_titre a span.mainmenuaspan,
-    div.vmenu span.mainmenuaspan,
-    div.vmenu .menu_contenu,
-    div.vmenu a.vmenu span,
-    div.vmenu span.vmenu,
-    div.vmenu .menu_titre .mainmenuaspan {
-        display: none !important;
+    /* Hamburger icon at the very top — CSS pseudo-element */
+    div.vmenu::before {
+        content: '\2630';
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 46px;
+        font-size: 22px;
+        color: #843523;
+        cursor: pointer;
+        border-bottom: 1px solid #e2e8f0;
+        background: #ffffff;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        flex-shrink: 0;
+    }
+
+    /* Default: hide ALL sidebar content (icons, text, labels, submenus) */
+    div.vmenu>* {
+        opacity: 0 !important;
         visibility: hidden !important;
-        width: 0 !important;
         height: 0 !important;
         overflow: hidden !important;
-    }
-
-    /* Hide sidebar section titles/labels */
-    div.vmenu .titre {
-        display: none !important;
-    }
-
-    /* Hide any sub-menus in sidebar */
-    div.vmenu .menu_contenu {
-        display: none !important;
-    }
-
-    /* Keep only icons visible and centered */
-    div.vmenu .menu_titre {
-        text-align: center !important;
-        padding: 0 !important;
         margin: 0 !important;
+        padding: 0 !important;
+        transition: opacity 0.2s ease, height 0.2s ease;
     }
 
-    div.vmenu .menu_titre a {
+    /* ---- HOVER STATE: Expand full sidebar ---- */
+    div.vmenu:hover {
+        width: 260px !important;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.12) !important;
+        overflow-y: auto !important;
+    }
+
+    /* Show all content on hover */
+    div.vmenu:hover>* {
+        opacity: 1 !important;
+        visibility: visible !important;
+        height: auto !important;
+        overflow: visible !important;
+        margin: initial !important;
+        padding: initial !important;
+    }
+
+    /* Hamburger icon changes to X on hover */
+    div.vmenu:hover::before {
+        content: '\2715';
+        color: #843523;
+        font-size: 20px;
+    }
+
+    /* Ensure menu items display nicely when expanded */
+    div.vmenu:hover .blockvmenusearch,
+    div.vmenu:hover .blockvmenubookmarks {
+        display: block !important;
+        padding: 8px 12px !important;
+    }
+
+    div.vmenu:hover .menu_titre a {
         display: flex !important;
         align-items: center !important;
-        justify-content: center !important;
-        width: 50px !important;
-        height: 44px !important;
-        padding: 0 !important;
-        margin: 2px 0 !important;
-        border-radius: 8px;
-        transition: background-color 0.2s ease;
+        padding: 8px 14px !important;
+        gap: 10px;
+        border-radius: 6px;
+        margin: 2px 8px !important;
+        transition: background-color 0.15s ease;
     }
 
-    div.vmenu .menu_titre a:hover {
-        background-color: rgba(132, 53, 35, 0.08) !important;
+    div.vmenu:hover .menu_titre a:hover {
+        background-color: rgba(132, 53, 35, 0.06) !important;
     }
 
-    div.vmenu .menu_titre a img,
-    div.vmenu .menu_titre a .picto {
-        margin: 0 auto !important;
+    div.vmenu:hover .menu_contenu {
         display: block !important;
+        padding-left: 20px !important;
     }
 
-    /* Adjust main content to account for 50px sidebar */
+    div.vmenu:hover .titre {
+        display: block !important;
+        padding: 10px 14px 4px !important;
+        font-size: 0.75rem !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        color: #9ca3af !important;
+        font-weight: 600 !important;
+    }
+
+    /* Main content: small left margin for the 42px trigger strip */
     #id-right {
-        margin-left: 58px !important;
-        transition: margin-left 0.3s ease;
-        max-width: calc(100vw - 68px) !important;
-    }
-
-    /* Ensure header stays above sidebar */
-    div.tmenu,
-    .login_block,
-    #tmenu_tooltip,
-    .tmenu {
-        z-index: 2000 !important;
-        position: relative;
+        margin-left: 50px !important;
+        max-width: calc(100vw - 60px) !important;
+        transition: margin-left 0.2s ease;
     }
 }
 
@@ -9387,7 +9418,6 @@ textarea:focus {
     clear: both;
 }
 
-/* Reduce whitespace on right */
 #id-right {
     padding-right: 0 !important;
     margin-right: 10px !important;
@@ -9423,12 +9453,10 @@ textarea:focus {
         padding: 12px !important;
     }
 
-    /* Keep login/user menu accessible on mobile — just shrink it */
     .login_block {
         font-size: 0.8rem !important;
     }
 
-    /* Targeted input width — only text-type inputs */
     input[type="text"],
     input[type="password"],
     input[type="email"],

@@ -9176,7 +9176,7 @@ div.flot-text .flot-tick-label .tickLabel, .fa-color-unset {
 }
 /* ============================================================================== */
 /* ============================================================================== */
-/* GSM THEME V6.1 - FLUSH SIDEBAR + TITLE WRAPS CONTENT                          */
+/* GSM THEME V6.2 - STABLE SIDEBAR + SIMPLE CARDS                                */
 /* Fully Integrated — No external Display CSS needed.                             */
 /* ============================================================================== */
 
@@ -9307,18 +9307,19 @@ div.login_block a {
 }
 
 /* ============================================================================== */
-/* 3. CHEVRON SIDEBAR — FLUSH LEFT (no gap!)                                      */
+/* 3. CHEVRON SIDEBAR — STABLE HOVER (no flicker)                                 */
+/*    Uses 28px trigger strip so hover target is the parent container itself       */
 /* ============================================================================== */
 @media screen and (min-width: 992px) {
 
-    /* Sidebar: invisible, flush left */
+    /* Sidebar: thin 28px strip flush left — acts as hover trigger */
     div.vmenu {
-        width: 0px !important;
-        min-width: 0px !important;
+        width: 28px !important;
+        min-width: 28px !important;
         overflow: hidden !important;
         white-space: nowrap !important;
         z-index: 1050 !important;
-        background: var(--bg-sidebar) !important;
+        background: transparent !important;
         position: fixed !important;
         height: calc(100vh - 50px) !important;
         left: 0 !important;
@@ -9326,19 +9327,21 @@ div.login_block a {
         border-right: none !important;
         padding: 0 !important;
         margin: 0 !important;
-        transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+            background 0.25s ease,
+            box-shadow 0.25s ease !important;
         box-shadow: none;
     }
 
-    /* Chevron > — rectangular, FLUSH to left edge (left:0), no gap */
+    /* Chevron > — flush left, rectangular, rounded right only */
     div.vmenu::before {
         content: '\276F';
         display: flex !important;
         align-items: center;
         justify-content: center;
-        width: 22px;
-        height: 40px;
-        font-size: 12px;
+        width: 28px;
+        height: 44px;
+        font-size: 13px;
         font-weight: bold;
         color: var(--primary-color);
         cursor: pointer;
@@ -9346,12 +9349,12 @@ div.login_block a {
         border: 1px solid var(--border-color);
         border-left: none !important;
         border-radius: 0 8px 8px 0;
-        position: fixed;
-        top: 50px;
+        position: absolute;
+        top: 0;
         left: 0 !important;
-        z-index: 1100;
+        z-index: 10;
         box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.06);
-        transition: left 0.25s ease, background 0.2s ease;
+        transition: left 0.25s ease, width 0.25s ease;
     }
 
     /* Hide ALL sidebar content by default */
@@ -9362,10 +9365,10 @@ div.login_block a {
         overflow: hidden !important;
         margin: 0 !important;
         padding: 0 !important;
-        transition: opacity 0.15s ease;
+        transition: opacity 0.2s ease;
     }
 
-    /* ---- HOVER: Expand sidebar — FLUSH LEFT ---- */
+    /* ---- HOVER: Expand sidebar — FLUSH LEFT, no flicker ---- */
     div.vmenu:hover {
         width: 260px !important;
         left: 0 !important;
@@ -9373,18 +9376,24 @@ div.login_block a {
         border-right: 1px solid var(--border-color) !important;
         box-shadow: 4px 0 24px rgba(0, 0, 0, 0.10) !important;
         overflow-y: auto !important;
-        padding-top: 44px !important;
+        padding-top: 50px !important;
         padding-left: 0 !important;
         margin-left: 0 !important;
     }
 
-    /* Chevron flips */
+    /* Chevron flips to < and moves to right edge */
     div.vmenu:hover::before {
         content: '\276E';
-        left: 236px !important;
+        left: 0 !important;
+        width: 260px;
+        background: var(--bg-surface);
+        border-bottom: 1px solid var(--border-color);
+        border-right: none;
+        border-radius: 0;
+        box-shadow: none;
     }
 
-    /* Show content */
+    /* Show content on hover */
     div.vmenu:hover>* {
         opacity: 1 !important;
         visibility: visible !important;
@@ -9498,83 +9507,21 @@ div.login_block a {
         border-radius: 4px;
     }
 
-    /* Main content: full width */
+    /* Main content: account for 28px trigger strip */
     #id-right {
-        margin-left: 10px !important;
-        max-width: calc(100vw - 20px) !important;
+        margin-left: 32px !important;
+        max-width: calc(100vw - 42px) !important;
         transition: margin-left 0.2s ease;
     }
 }
 
 /* ============================================================================== */
-/* 4. MAIN CONTENT — .fiche wraps TITLE + CONTENT as one card                     */
-/*    Title = card header, child .box elements = flat content inside               */
+/* 4. MAIN CONTENT CARDS — Simple individual cards (reverted)                      */
 /* ============================================================================== */
 
-/* .fiche = THE main card container (wraps title + all content) */
-#id-right div.fiche {
-    border: 1px solid var(--border-color) !important;
-    border-radius: var(--radius-md) !important;
-    background-color: var(--bg-surface) !important;
-    box-shadow: var(--shadow-card) !important;
-    padding: 0 !important;
-    margin-bottom: 24px !important;
-    animation: fadeInUp 0.6s ease-out forwards;
-    overflow: hidden;
-}
-
-/* .titre INSIDE .fiche = card header */
-#id-right div.fiche>.titre,
-#id-right div.fiche .titre:first-child,
-#id-right div.fiche>div>.titre:first-child {
-    font-family: var(--font-heading) !important;
-    font-size: 1.35rem !important;
-    font-weight: 700 !important;
-    color: var(--text-main) !important;
-    letter-spacing: -0.02em;
-    background: linear-gradient(to bottom, #f8fafc, var(--bg-surface)) !important;
-    border-bottom: 1px solid var(--border-color) !important;
-    border-top: none !important;
-    border-left: none !important;
-    border-right: none !important;
-    box-shadow: none !important;
-    padding: 20px 24px 16px !important;
-    margin: 0 !important;
-    display: block !important;
-    text-shadow: none !important;
-}
-
-/* Content inside .fiche gets consistent padding */
-#id-right div.fiche>div:not(.titre),
-#id-right div.fiche>table,
-#id-right div.fiche>form,
-#id-right div.fiche .tabBar,
-#id-right div.fiche .fichehalfleft,
-#id-right div.fiche .fichehalfright {
-    padding: 20px 24px !important;
-}
-
-/* .box INSIDE .fiche = flat/subtle (no heavy card styling, avoid nested cards) */
-#id-right div.fiche .box {
-    border: 1px solid #f1f5f9 !important;
-    border-radius: var(--radius-sm) !important;
-    background-color: #fafbfc !important;
-    box-shadow: none !important;
-    padding: 16px !important;
-    margin-bottom: 16px !important;
-    transition: var(--trans-fast);
-}
-
-#id-right div.fiche .box:hover {
-    background-color: #f8fafc !important;
-    border-color: var(--border-color) !important;
-    box-shadow: var(--shadow-sm) !important;
-    transform: none;
-}
-
-/* .box OUTSIDE .fiche = standalone card (keep full card styling) */
-#id-right>.box,
-#id-right>div>.box:not(.fiche .box) {
+#id-right div.fiche,
+#id-right .tabBar,
+#id-right .box {
     border: 1px solid var(--border-color) !important;
     border-radius: var(--radius-md) !important;
     background-color: var(--bg-surface) !important;
@@ -9582,20 +9529,6 @@ div.login_block a {
     padding: 24px !important;
     margin-bottom: 24px !important;
     animation: fadeInUp 0.6s ease-out forwards;
-    transition: var(--trans-smooth);
-}
-
-#id-right>.box:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-float) !important;
-}
-
-/* tabBar and fichehalves */
-#id-right .tabBar {
-    border-radius: var(--radius-md) !important;
-    border: 1px solid var(--border-color) !important;
-    background-color: var(--bg-surface) !important;
-    box-shadow: var(--shadow-card) !important;
 }
 
 #id-right .fichehalfleft,
@@ -9605,7 +9538,15 @@ div.login_block a {
     border: 1px solid var(--border-color) !important;
 }
 
-/* Box titles */
+#id-right .box {
+    transition: var(--trans-smooth);
+}
+
+#id-right .box:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-float) !important;
+}
+
 .box_titre {
     border-bottom: 1px solid var(--border-color) !important;
     font-family: var(--font-heading) !important;
@@ -9615,8 +9556,26 @@ div.login_block a {
 }
 
 /* ============================================================================== */
-/* 5. SECTION TITLES (standalone, not inside .fiche)                              */
+/* 5. SECTION TITLES — Clean, no background                                       */
 /* ============================================================================== */
+
+#id-right .titre {
+    font-family: var(--font-heading) !important;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: var(--text-main) !important;
+    letter-spacing: -0.02em;
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    padding-left: 0 !important;
+    text-shadow: none !important;
+    margin-bottom: 20px !important;
+    clear: both;
+    display: block !important;
+}
 
 div.titre.liste_titre_bydiv,
 div.titre,
@@ -9625,7 +9584,6 @@ td.titre {
     font-size: 1.35rem !important;
     font-weight: 700 !important;
     color: var(--text-main) !important;
-    letter-spacing: -0.02em;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;

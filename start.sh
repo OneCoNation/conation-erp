@@ -24,6 +24,16 @@ chmod 444 /app/htdocs/conf/conf.php || true
 # 4. Jalankan Service Utama (Nginx & PHP-FPM)
 # Nixpacks biasanya menggunakan perintah start bawaan, 
 # tapi jika Anda menggunakan start.sh manual, jalankan perintah ini:
-echo "Starting Nginx and PHP-FPM..."
-php-fpm -D
-nginx -g "daemon off;"
+
+# Check if Dolibarr install lock exists
+if [ -f "/app/documents/install.lock" ]; then
+    echo "Dolibarr is already installed (install.lock found)"
+else
+    echo "WARNING: Dolibarr installation not complete yet."
+    echo "Please visit https://${RAILWAY_PUBLIC_DOMAIN}/install/ to complete setup."
+    echo "After installation, an install.lock file will be created."
+fi
+
+# Start PHP built-in server
+echo "Starting PHP server on port ${PORT:-8080}..."
+exec php -S 0.0.0.0:${PORT:-8080} -t /app/htdocs

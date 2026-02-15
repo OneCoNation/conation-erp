@@ -9176,123 +9176,140 @@ div.flot-text .flot-tick-label .tickLabel, .fa-color-unset {
 }
 /* ============================================================================== */
 /* ============================================================================== */
-/* GSM THEME V5.1 - OPTIMIZED FOR 1420px REFERENCE + RESPONSIVE POLISH            */
+/* GSM THEME V6 - FULLY INTEGRATED (User CSS + Theme Source)                      */
+/* No external Display CSS needed. Everything is here.                             */
 /* ============================================================================== */
 
-/* 1. Typography & Reset */
+/* GSM Custom Properties */
+:root {
+    --primary-color: #843523;
+    --primary-light: #a65d4d;
+    --primary-hover: #632618;
+    --accent-color: #BFA584;
+    --bg-body: #f3f5f8;
+    --bg-surface: #ffffff;
+    --bg-sidebar: #ffffff;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --text-main: #111827;
+    --text-muted: #6b7280;
+    --text-light: #9ca3af;
+    --text-on-primary: #ffffff;
+    --border-color: #e2e8f0;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+    --shadow-float: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-primary: 0 4px 14px 0 rgba(132, 53, 35, 0.39);
+    --trans-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --trans-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================================== */
+/* 1. GLOBAL & ANIMATIONS                                                         */
+/* ============================================================================== */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 html {
+    scroll-behavior: smooth;
     font-size: 14px !important;
 }
 
 body {
-    font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    font-family: var(--font-body) !important;
+    background-color: var(--bg-body) !important;
+    color: var(--text-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
     overflow-x: hidden !important;
 }
 
-#id-right .titre,
-h1,
-h2,
-h3,
-h4,
-th {
-    font-family: 'Montserrat', sans-serif !important;
+/* Popup/Modal Fix — ensure they're opaque on new background */
+.ui-dialog,
+.ui-widget-content,
+.ui-dialog-content,
+.jbox-container,
+.box-stats {
+    background-color: var(--bg-surface) !important;
+    opacity: 1 !important;
+    box-shadow: var(--shadow-float) !important;
+    border-radius: var(--radius-md) !important;
 }
 
-/* 2. Modern Components — scoped to #id-right */
-#id-right div.fiche,
-#id-right .tabBar,
-#id-right .box,
-#id-right .fichehalfleft,
-#id-right .fichehalfright {
-    border-radius: 10px !important;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025) !important;
-    border: 1px solid #e2e8f0 !important;
-    transition: box-shadow 0.3s ease;
+/* Custom Scrollbar (Webkit) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
 }
 
-#id-right .box:hover {
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
+::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-/* 3. Inputs & Forms — targeted types */
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="number"],
-input[type="search"],
-input[type="tel"],
-input[type="url"],
-select,
-textarea {
-    padding: 8px 10px !important;
-    border-radius: 6px !important;
-    border: 1px solid #e2e8f0 !important;
-    color: var(--colortext) !important;
-    font-size: 0.95rem !important;
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus,
-input[type="number"]:focus,
-select:focus,
-textarea:focus {
-    box-shadow: 0 0 0 3px rgba(132, 53, 35, 0.1) !important;
-    border-color: #843523 !important;
-}
-
-/* Select2 Fix */
-.select2-container--default .select2-selection--single {
-    border-color: #e2e8f0 !important;
-    height: 38px !important;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 38px !important;
-    color: var(--colortext) !important;
-}
-
-/* 4. Buttons */
-.button,
-.butAction {
-    background: linear-gradient(135deg, rgb(166, 93, 77), rgb(132, 53, 35)) !important;
-    border-radius: 6px !important;
-    box-shadow: 0 4px 14px 0 rgba(132, 53, 35, 0.39) !important;
-    font-family: 'Montserrat', sans-serif !important;
-    font-weight: 600 !important;
-    padding: 8px 16px !important;
-    color: #fff !important;
-    border: none !important;
-}
-
-.butActionRefused {
-    border-radius: 6px !important;
-    padding: 8px 16px !important;
-}
-
-.buttonCancel,
-.butActionCancel {
-    background: #f3f4f6 !important;
-    color: #111827 !important;
-    box-shadow: none !important;
-    border: 1px solid #e2e8f0 !important;
-}
-
-/* 5. Table Responsiveness */
-.div-table-responsive,
-.div-table-responsive-no-min {
-    overflow-x: auto !important;
-    width: 100% !important;
-    display: block !important;
-    -webkit-overflow-scrolling: touch;
-    margin-bottom: 15px;
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }
 
 /* ============================================================================== */
-/* 6. CHEVRON SIDEBAR                                                             */
-/*    Default:  Hidden, small round > chevron at top-left corner                  */
-/*    Hover:    Expands full menu, floats over content, solid background           */
-/*    Ref:      Optimized for 1420px viewport width                               */
+/* 2. TOP NAVIGATION — Glassmorphism                                              */
+/* ============================================================================== */
+
+div.tmenu,
+.login_block {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+a.tmenuimage {
+    font-family: var(--font-heading);
+    color: var(--text-muted) !important;
+    font-weight: 600;
+    padding: 5px 12px;
+    transition: var(--trans-fast);
+    border-radius: var(--radius-sm);
+}
+
+a.tmenuimage:hover,
+a.tmenuimage:focus {
+    color: var(--primary-color) !important;
+    background: #FFF5F2 !important;
+    transform: translateY(-1px);
+}
+
+a.tmenuimage.tmenusel {
+    color: var(--primary-color) !important;
+    background: #FFF5F2 !important;
+}
+
+div.login_block a {
+    font-weight: 600 !important;
+    color: var(--primary-color) !important;
+}
+
+/* ============================================================================== */
+/* 3. CHEVRON SIDEBAR                                                             */
+/*    Default: Hidden, rectangular > button at top-left corner                    */
+/*    Hover: Expands full menu, solid white background, floats over content        */
 /* ============================================================================== */
 @media screen and (min-width: 992px) {
 
@@ -9303,38 +9320,43 @@ textarea:focus {
         overflow: hidden !important;
         white-space: nowrap !important;
         z-index: 1050 !important;
-        background: #ffffff !important;
+        background: var(--bg-sidebar) !important;
         position: fixed !important;
         height: calc(100vh - 50px) !important;
         left: 0;
         top: 50px;
-        border-right: none;
+        border-right: none !important;
         padding-top: 0 !important;
         transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
         box-shadow: none;
     }
 
-    /* Chevron > button — small, round, flush top-left */
+    /* Chevron > button — rectangular, flush left, rounded right side only */
     div.vmenu::before {
         content: '\276F';
         display: flex !important;
         align-items: center;
         justify-content: center;
-        width: 28px;
-        height: 28px;
-        font-size: 14px;
+        width: 24px;
+        height: 40px;
+        font-size: 13px;
         font-weight: bold;
-        color: #843523;
+        color: var(--primary-color);
         cursor: pointer;
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 50%;
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-left: none;
+        border-radius: 0 8px 8px 0;
         position: fixed;
         top: 52px;
-        left: 2px;
+        left: 0;
         z-index: 1100;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
-        transition: transform 0.25s ease, left 0.25s ease;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.08);
+        transition: left 0.25s ease, background 0.2s ease;
+    }
+
+    div.vmenu::before:hover {
+        background: #FFF5F2;
     }
 
     /* Default: hide ALL sidebar content */
@@ -9351,13 +9373,14 @@ textarea:focus {
     /* ---- HOVER: Expand full sidebar ---- */
     div.vmenu:hover {
         width: 260px !important;
-        border-right: 1px solid #e2e8f0;
+        background: var(--bg-sidebar) !important;
+        border-right: 1px solid var(--border-color) !important;
         box-shadow: 4px 0 24px rgba(0, 0, 0, 0.10) !important;
         overflow-y: auto !important;
         padding-top: 44px !important;
     }
 
-    /* Chevron flips on expand */
+    /* Chevron flips and moves right on expand */
     div.vmenu:hover::before {
         content: '\276E';
         left: 234px;
@@ -9373,62 +9396,113 @@ textarea:focus {
         padding: initial !important;
     }
 
-    /* Expanded menu styling */
+    /* Sidebar category titles */
+    div.vmenu:hover .titre {
+        font-family: var(--font-heading) !important;
+        color: var(--text-light) !important;
+        font-size: 0.75rem !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.1em !important;
+        font-weight: 800 !important;
+        margin: 20px 0 10px 15px !important;
+        padding: 0 !important;
+        display: block !important;
+        border-bottom: none !important;
+        background: transparent !important;
+    }
+
+    /* Sidebar menu links */
+    div.vmenu:hover a.vmenu {
+        display: block !important;
+        border-radius: 0 20px 20px 0 !important;
+        margin: 4px 15px 4px 0 !important;
+        padding: 10px 15px !important;
+        transition: var(--trans-fast);
+        color: var(--text-muted) !important;
+        font-weight: 500 !important;
+        border-left: 3px solid transparent;
+        text-decoration: none !important;
+    }
+
+    div.vmenu:hover a.vmenu:hover {
+        background: var(--bg-surface) !important;
+        color: var(--primary-color) !important;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
+        transform: translateX(5px);
+        border-left: 3px solid var(--accent-color) !important;
+    }
+
+    div.vmenu:hover a.vmenu.active,
+    div.vmenu:hover a.vmenu.vmenusel {
+        background: linear-gradient(90deg, #FFF5F2, #ffffff) !important;
+        color: var(--primary-color) !important;
+        border-left-color: var(--primary-color) !important;
+    }
+
+    /* Sidebar search/bookmarks */
     div.vmenu:hover .blockvmenusearch,
     div.vmenu:hover .blockvmenubookmarks {
         display: block !important;
         padding: 8px 12px !important;
     }
 
+    /* Sidebar sub-menu items */
     div.vmenu:hover .menu_titre a {
         display: flex !important;
         align-items: center !important;
         padding: 8px 14px !important;
         gap: 10px;
-        border-radius: 6px;
-        margin: 2px 8px !important;
-        transition: background-color 0.15s ease;
-        color: #374151 !important;
+        border-radius: 0 20px 20px 0 !important;
+        margin: 2px 15px 2px 0 !important;
+        transition: var(--trans-fast);
+        color: var(--text-muted) !important;
         text-decoration: none !important;
+        border-left: 3px solid transparent;
     }
 
     div.vmenu:hover .menu_titre a:hover {
-        background-color: rgba(132, 53, 35, 0.06) !important;
-        color: #843523 !important;
+        background: var(--bg-surface) !important;
+        color: var(--primary-color) !important;
+        border-left-color: var(--accent-color) !important;
     }
 
     div.vmenu:hover .menu_contenu {
         display: block !important;
-        padding-left: 20px !important;
+        padding-left: 10px !important;
     }
 
     div.vmenu:hover .menu_contenu a {
         display: block !important;
-        padding: 5px 14px !important;
+        padding: 6px 14px !important;
         font-size: 0.88rem !important;
-        color: #6b7280 !important;
+        color: var(--text-muted) !important;
         text-decoration: none !important;
-        border-radius: 4px;
-        margin: 1px 8px !important;
+        border-radius: 0 16px 16px 0 !important;
+        margin: 1px 15px 1px 0 !important;
+        border-left: 3px solid transparent;
     }
 
     div.vmenu:hover .menu_contenu a:hover {
-        background-color: rgba(132, 53, 35, 0.04) !important;
-        color: #843523 !important;
+        background: #FFF5F2 !important;
+        color: var(--primary-color) !important;
+        border-left-color: var(--accent-color) !important;
     }
 
-    div.vmenu:hover .titre {
-        display: block !important;
-        padding: 12px 14px 4px !important;
-        font-size: 0.7rem !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.08em !important;
-        color: #9ca3af !important;
-        font-weight: 700 !important;
-        font-family: 'Montserrat', sans-serif !important;
+    /* Custom sidebar scrollbar */
+    div.vmenu::-webkit-scrollbar {
+        width: 4px;
     }
 
-    /* Main content: full width — sidebar is 0px by default */
+    div.vmenu::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    div.vmenu::-webkit-scrollbar-thumb {
+        background: #d1d5db;
+        border-radius: 4px;
+    }
+
+    /* Main content: full width */
     #id-right {
         margin-left: 10px !important;
         max-width: calc(100vw - 20px) !important;
@@ -9437,46 +9511,365 @@ textarea:focus {
 }
 
 /* ============================================================================== */
-/* 7. CLEAN SECTION TITLES                                                        */
+/* 4. MAIN CONTENT CARDS — with fadeInUp animation                                */
 /* ============================================================================== */
 
-/* Remove background/container from section title headers */
-#id-right .titre {
-    background: transparent !important;
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    margin-bottom: 16px !important;
-    padding: 0 !important;
-    clear: both;
-    display: block !important;
-    font-size: 1.25rem !important;
+#id-right div.fiche,
+#id-right .tabBar,
+#id-right .box {
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-md) !important;
+    background-color: var(--bg-surface) !important;
+    box-shadow: var(--shadow-card) !important;
+    padding: 24px !important;
+    margin-bottom: 24px !important;
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+#id-right .fichehalfleft,
+#id-right .fichehalfright {
+    border-radius: var(--radius-md) !important;
+    box-shadow: var(--shadow-card) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+/* Dashboard Widgets */
+#id-right .box {
+    transition: var(--trans-smooth);
+}
+
+#id-right .box:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-float) !important;
+}
+
+.box_titre {
+    border-bottom: 1px solid var(--border-color) !important;
+    font-family: var(--font-heading) !important;
     font-weight: 700 !important;
-    color: #1f2937 !important;
+    color: var(--primary-color) !important;
+    font-size: 1.1em;
 }
 
+/* ============================================================================== */
+/* 5. SECTION TITLES — No container, transparent background                       */
+/* ============================================================================== */
+
+/* All section titles: clean, no background/border/shadow */
+#id-right .titre,
 .titre.liste_titre_bydiv,
-div.titre {
-    background: transparent !important;
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding-left: 0 !important;
-}
-
+div.titre,
 .ficheaddleft .titre,
 .fichehalfright .titre,
 td.titre {
-    background: transparent !important;
+    font-family: var(--font-heading) !important;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: var(--text-main) !important;
+    letter-spacing: -0.02em;
+    background: none !important;
+    background-color: transparent !important;
     border: none !important;
-    padding: 4px 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    padding-left: 0 !important;
+    text-shadow: none !important;
+    margin-bottom: 16px !important;
+    clear: both;
+    display: block !important;
 }
 
 div.titre.liste_titre_bydiv {
     border-top: none !important;
 }
 
-/* 8. Content spacing */
+/* ============================================================================== */
+/* 6. TABLES — Modern Data Display                                                */
+/* ============================================================================== */
+
+table.liste,
+.div-table-responsive,
+.div-table-responsive-no-min {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    overflow-x: auto !important;
+    display: block !important;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 15px;
+}
+
+/* Table Header */
+tr.liste_titre,
+tr.liste_titre_sel {
+    background: #f8fafc !important;
+    height: 50px !important;
+}
+
+tr.liste_titre th,
+tr.liste_titre td {
+    border-bottom: 1px solid var(--border-color) !important;
+    color: var(--text-muted) !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 12px 15px !important;
+}
+
+/* Table Body */
+.pair,
+.impair,
+.oddeven {
+    background: #fff !important;
+    transition: background 0.2s;
+}
+
+td {
+    border-bottom: 1px solid var(--border-color) !important;
+    padding: 12px 15px !important;
+    vertical-align: middle !important;
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+.pair:hover,
+.impair:hover,
+.oddeven:hover {
+    background-color: #FFF9F5 !important;
+    cursor: default;
+}
+
+table.liste a {
+    color: var(--primary-color);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+table.liste a:hover {
+    text-decoration: underline;
+    color: var(--primary-hover);
+}
+
+/* ============================================================================== */
+/* 7. BUTTONS — Premium with Gradient & Hover Effects                             */
+/* ============================================================================== */
+
+.button,
+.butAction {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color)) !important;
+    border: none !important;
+    color: var(--text-on-primary) !important;
+    padding: 12px 24px !important;
+    border-radius: var(--radius-sm) !important;
+    font-family: var(--font-heading);
+    font-weight: 600 !important;
+    box-shadow: var(--shadow-primary);
+    transition: var(--trans-fast);
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1.2;
+}
+
+.button:hover,
+.butAction:hover {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)) !important;
+    box-shadow: 0 10px 15px -3px rgba(132, 53, 35, 0.5);
+    transform: translateY(-2px) scale(1.02);
+}
+
+.button:active,
+.butAction:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+/* Delete/Refuse — Red */
+.buttonRefuse,
+.butActionRefuse,
+.buttonDelete,
+.butActionDelete {
+    background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+    box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.4);
+}
+
+.buttonRefuse:hover,
+.buttonDelete:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+    box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.5);
+}
+
+/* Cancel — Neutral */
+.buttonCancel,
+.butActionCancel {
+    background: #f3f4f6 !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: none;
+}
+
+.buttonCancel:hover {
+    background: #e5e7eb !important;
+    color: #000 !important;
+}
+
+/* Refused button */
+.butActionRefused {
+    border-radius: var(--radius-sm) !important;
+    padding: 12px 24px !important;
+}
+
+/* ============================================================================== */
+/* 8. FORMS — Input Fields with Focus Glow                                        */
+/* ============================================================================== */
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+select,
+textarea {
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 12px !important;
+    background: #f9fafb !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    transition: var(--trans-fast);
+    color: var(--text-main);
+    font-size: 0.95rem;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary-color) !important;
+    background: #fff !important;
+    outline: none !important;
+    box-shadow: 0 0 0 4px rgba(132, 53, 35, 0.2) !important;
+}
+
+/* Select2 */
+.select2-container .select2-selection--single {
+    height: 40px !important;
+    border-color: var(--border-color) !important;
+    border-radius: var(--radius-sm) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 40px !important;
+    color: var(--text-main) !important;
+}
+
+/* ============================================================================== */
+/* 9. TABS — Underline Style                                                      */
+/* ============================================================================== */
+
+.tabs {
+    border-bottom: 2px solid var(--border-color) !important;
+    margin-bottom: 20px;
+}
+
+.tab {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 3px solid transparent !important;
+    color: var(--text-muted) !important;
+    font-weight: 500;
+    padding: 10px 20px !important;
+    margin-right: 5px;
+    transition: var(--trans-fast);
+    font-family: var(--font-heading);
+}
+
+.tab:hover {
+    color: var(--primary-color) !important;
+    background: rgba(132, 53, 35, 0.05) !important;
+}
+
+.tab.active {
+    background: transparent !important;
+    border-bottom: 3px solid var(--primary-color) !important;
+    color: var(--primary-color) !important;
+    font-weight: 700;
+}
+
+div.tabs a.tabTitle {
+    font-family: var(--font-heading) !important;
+    font-weight: 600 !important;
+}
+
+div.tabs a.tab {
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0 !important;
+    transition: background-color 0.2s ease;
+}
+
+/* ============================================================================== */
+/* 10. BADGES & STATUS PILLS                                                      */
+/* ============================================================================== */
+
+.badge,
+.badge-status,
+span[class*="status"] {
+    border-radius: 50px !important;
+    padding: 4px 12px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+}
+
+.statusvalidated,
+.status1,
+.status4 {
+    background-color: #f0fdf4 !important;
+    color: #16a34a !important;
+    border: 1px solid #bbf7d0;
+}
+
+.statusdraft,
+.status0 {
+    background-color: #FFF9F5 !important;
+    color: var(--primary-light) !important;
+    border: 1px solid var(--accent-color);
+}
+
+/* ============================================================================== */
+/* 11. LOGIN PAGE                                                                 */
+/* ============================================================================== */
+
+.login_table {
+    background-color: var(--bg-surface) !important;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-float);
+    padding: 40px;
+}
+
+/* ============================================================================== */
+/* 12. BREADCRUMB & LINKS                                                         */
+/* ============================================================================== */
+
+.refid,
+.refidno {
+    font-family: var(--font-body) !important;
+}
+
+a:not(.butAction):not(.button):not(.tabTitle):hover {
+    color: var(--primary-color) !important;
+}
+
+/* ============================================================================== */
+/* 13. CONTENT SPACING                                                            */
+/* ============================================================================== */
+
 #id-right .fiche {
     margin-top: 16px !important;
     clear: both;
@@ -9488,60 +9881,10 @@ div.titre.liste_titre_bydiv {
 }
 
 /* ============================================================================== */
-/* 9. UI POLISH                                                                   */
-/* ============================================================================== */
-
-/* Tabs */
-div.tabs a.tabTitle {
-    font-family: 'Montserrat', sans-serif !important;
-    font-weight: 600 !important;
-}
-
-div.tabs a.tab {
-    border-radius: 6px 6px 0 0 !important;
-    transition: background-color 0.2s ease;
-}
-
-/* Breadcrumb */
-.refid,
-.refidno {
-    font-family: 'Inter', sans-serif !important;
-}
-
-/* Links — GSM accent color */
-a:not(.butAction):not(.button):not(.tabTitle):hover {
-    color: #843523 !important;
-}
-
-/* Badge */
-.badge {
-    border-radius: 12px !important;
-    padding: 2px 10px !important;
-    font-size: 0.8rem !important;
-    font-weight: 600 !important;
-}
-
-/* Sidebar scrollbar */
-div.vmenu::-webkit-scrollbar {
-    width: 4px;
-}
-
-div.vmenu::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-div.vmenu::-webkit-scrollbar-thumb {
-    background: #d1d5db;
-    border-radius: 4px;
-}
-
-/* ============================================================================== */
-/* 10. RESPONSIVE — Intermediate (992-1200px)                                     */
-/*     Ensures navbar items don't overflow at medium desktop                       */
+/* 14. RESPONSIVE — Intermediate Desktop (992-1200px)                             */
 /* ============================================================================== */
 @media screen and (min-width: 992px) and (max-width: 1200px) {
 
-    /* Slightly reduce top menu spacing at medium desktop */
     li.tmenu,
     li.tmenusel {
         min-width: 36px !important;
@@ -9553,7 +9896,7 @@ div.vmenu::-webkit-scrollbar-thumb {
 }
 
 /* ============================================================================== */
-/* 11. RESPONSIVE — Tablet (max 991px)                                            */
+/* 15. RESPONSIVE — Tablet (max 991px)                                            */
 /* ============================================================================== */
 @media screen and (max-width: 991px) {
     div.vmenu {
@@ -9579,7 +9922,7 @@ div.vmenu::-webkit-scrollbar-thumb {
 }
 
 /* ============================================================================== */
-/* 12. RESPONSIVE — Mobile (max 768px)                                            */
+/* 16. RESPONSIVE — Mobile (max 768px)                                            */
 /* ============================================================================== */
 @media screen and (max-width: 768px) {
     html {

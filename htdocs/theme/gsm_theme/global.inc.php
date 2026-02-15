@@ -9176,7 +9176,7 @@ div.flot-text .flot-tick-label .tickLabel, .fa-color-unset {
 }
 /* ============================================================================== */
 /* ============================================================================== */
-/* GSM THEME V4 - HAMBURGER SIDEBAR + ORIGINAL NAVBAR                             */
+/* GSM THEME V5.1 - OPTIMIZED FOR 1420px REFERENCE + RESPONSIVE POLISH            */
 /* ============================================================================== */
 
 /* 1. Typography & Reset */
@@ -9265,6 +9265,11 @@ textarea:focus {
     border: none !important;
 }
 
+.butActionRefused {
+    border-radius: 6px !important;
+    padding: 8px 16px !important;
+}
+
 .buttonCancel,
 .butActionCancel {
     background: #f3f4f6 !important;
@@ -9284,16 +9289,17 @@ textarea:focus {
 }
 
 /* ============================================================================== */
-/* 6. HAMBURGER SIDEBAR                                                           */
-/*    Default: Fully hidden, only hamburger icon visible at top-left               */
-/*    Hover: Expands full menu, floats over content, solid background              */
+/* 6. CHEVRON SIDEBAR                                                             */
+/*    Default:  Hidden, small round > chevron at top-left corner                  */
+/*    Hover:    Expands full menu, floats over content, solid background           */
+/*    Ref:      Optimized for 1420px viewport width                               */
 /* ============================================================================== */
 @media screen and (min-width: 992px) {
 
-    /* Sidebar container: thin strip with hamburger trigger */
+    /* Sidebar: invisible by default */
     div.vmenu {
-        width: 42px !important;
-        min-width: 42px !important;
+        width: 0px !important;
+        min-width: 0px !important;
         overflow: hidden !important;
         white-space: nowrap !important;
         z-index: 1050 !important;
@@ -9302,32 +9308,36 @@ textarea:focus {
         height: calc(100vh - 50px) !important;
         left: 0;
         top: 50px;
-        border-right: 1px solid #e2e8f0;
+        border-right: none;
         padding-top: 0 !important;
         transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
         box-shadow: none;
     }
 
-    /* Hamburger icon at the very top — CSS pseudo-element */
+    /* Chevron > button — small, round, flush top-left */
     div.vmenu::before {
-        content: '\2630';
+        content: '\276F';
         display: flex !important;
         align-items: center;
         justify-content: center;
-        width: 42px;
-        height: 46px;
-        font-size: 22px;
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+        font-weight: bold;
         color: #843523;
         cursor: pointer;
-        border-bottom: 1px solid #e2e8f0;
         background: #ffffff;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        flex-shrink: 0;
+        border: 1px solid #e2e8f0;
+        border-radius: 50%;
+        position: fixed;
+        top: 52px;
+        left: 2px;
+        z-index: 1100;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+        transition: transform 0.25s ease, left 0.25s ease;
     }
 
-    /* Default: hide ALL sidebar content (icons, text, labels, submenus) */
+    /* Default: hide ALL sidebar content */
     div.vmenu>* {
         opacity: 0 !important;
         visibility: hidden !important;
@@ -9335,17 +9345,25 @@ textarea:focus {
         overflow: hidden !important;
         margin: 0 !important;
         padding: 0 !important;
-        transition: opacity 0.2s ease, height 0.2s ease;
+        transition: opacity 0.15s ease;
     }
 
-    /* ---- HOVER STATE: Expand full sidebar ---- */
+    /* ---- HOVER: Expand full sidebar ---- */
     div.vmenu:hover {
         width: 260px !important;
-        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.12) !important;
+        border-right: 1px solid #e2e8f0;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.10) !important;
         overflow-y: auto !important;
+        padding-top: 44px !important;
     }
 
-    /* Show all content on hover */
+    /* Chevron flips on expand */
+    div.vmenu:hover::before {
+        content: '\276E';
+        left: 234px;
+    }
+
+    /* Show content on hover */
     div.vmenu:hover>* {
         opacity: 1 !important;
         visibility: visible !important;
@@ -9355,14 +9373,7 @@ textarea:focus {
         padding: initial !important;
     }
 
-    /* Hamburger icon changes to X on hover */
-    div.vmenu:hover::before {
-        content: '\2715';
-        color: #843523;
-        font-size: 20px;
-    }
-
-    /* Ensure menu items display nicely when expanded */
+    /* Expanded menu styling */
     div.vmenu:hover .blockvmenusearch,
     div.vmenu:hover .blockvmenubookmarks {
         display: block !important;
@@ -9377,10 +9388,13 @@ textarea:focus {
         border-radius: 6px;
         margin: 2px 8px !important;
         transition: background-color 0.15s ease;
+        color: #374151 !important;
+        text-decoration: none !important;
     }
 
     div.vmenu:hover .menu_titre a:hover {
         background-color: rgba(132, 53, 35, 0.06) !important;
+        color: #843523 !important;
     }
 
     div.vmenu:hover .menu_contenu {
@@ -9388,31 +9402,81 @@ textarea:focus {
         padding-left: 20px !important;
     }
 
-    div.vmenu:hover .titre {
+    div.vmenu:hover .menu_contenu a {
         display: block !important;
-        padding: 10px 14px 4px !important;
-        font-size: 0.75rem !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.05em !important;
-        color: #9ca3af !important;
-        font-weight: 600 !important;
+        padding: 5px 14px !important;
+        font-size: 0.88rem !important;
+        color: #6b7280 !important;
+        text-decoration: none !important;
+        border-radius: 4px;
+        margin: 1px 8px !important;
     }
 
-    /* Main content: small left margin for the 42px trigger strip */
+    div.vmenu:hover .menu_contenu a:hover {
+        background-color: rgba(132, 53, 35, 0.04) !important;
+        color: #843523 !important;
+    }
+
+    div.vmenu:hover .titre {
+        display: block !important;
+        padding: 12px 14px 4px !important;
+        font-size: 0.7rem !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.08em !important;
+        color: #9ca3af !important;
+        font-weight: 700 !important;
+        font-family: 'Montserrat', sans-serif !important;
+    }
+
+    /* Main content: full width — sidebar is 0px by default */
     #id-right {
-        margin-left: 50px !important;
-        max-width: calc(100vw - 60px) !important;
+        margin-left: 10px !important;
+        max-width: calc(100vw - 20px) !important;
         transition: margin-left 0.2s ease;
     }
 }
 
-/* 7. Fix Container Overlaps — scoped to content area */
+/* ============================================================================== */
+/* 7. CLEAN SECTION TITLES                                                        */
+/* ============================================================================== */
+
+/* Remove background/container from section title headers */
 #id-right .titre {
-    margin-bottom: 20px !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin-bottom: 16px !important;
+    padding: 0 !important;
     clear: both;
     display: block !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: #1f2937 !important;
 }
 
+.titre.liste_titre_bydiv,
+div.titre {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding-left: 0 !important;
+}
+
+.ficheaddleft .titre,
+.fichehalfright .titre,
+td.titre {
+    background: transparent !important;
+    border: none !important;
+    padding: 4px 0 !important;
+}
+
+div.titre.liste_titre_bydiv {
+    border-top: none !important;
+}
+
+/* 8. Content spacing */
 #id-right .fiche {
     margin-top: 16px !important;
     clear: both;
@@ -9423,9 +9487,80 @@ textarea:focus {
     margin-right: 10px !important;
 }
 
-/* 8. MOBILE RESPONSIVE */
+/* ============================================================================== */
+/* 9. UI POLISH                                                                   */
+/* ============================================================================== */
+
+/* Tabs */
+div.tabs a.tabTitle {
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600 !important;
+}
+
+div.tabs a.tab {
+    border-radius: 6px 6px 0 0 !important;
+    transition: background-color 0.2s ease;
+}
+
+/* Breadcrumb */
+.refid,
+.refidno {
+    font-family: 'Inter', sans-serif !important;
+}
+
+/* Links — GSM accent color */
+a:not(.butAction):not(.button):not(.tabTitle):hover {
+    color: #843523 !important;
+}
+
+/* Badge */
+.badge {
+    border-radius: 12px !important;
+    padding: 2px 10px !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+}
+
+/* Sidebar scrollbar */
+div.vmenu::-webkit-scrollbar {
+    width: 4px;
+}
+
+div.vmenu::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+div.vmenu::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 4px;
+}
+
+/* ============================================================================== */
+/* 10. RESPONSIVE — Intermediate (992-1200px)                                     */
+/*     Ensures navbar items don't overflow at medium desktop                       */
+/* ============================================================================== */
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+
+    /* Slightly reduce top menu spacing at medium desktop */
+    li.tmenu,
+    li.tmenusel {
+        min-width: 36px !important;
+    }
+
+    .mainmenuaspan {
+        font-size: 0.82em !important;
+    }
+}
+
+/* ============================================================================== */
+/* 11. RESPONSIVE — Tablet (max 991px)                                            */
+/* ============================================================================== */
 @media screen and (max-width: 991px) {
     div.vmenu {
+        display: none !important;
+    }
+
+    div.vmenu::before {
         display: none !important;
     }
 
@@ -9443,6 +9578,9 @@ textarea:focus {
     }
 }
 
+/* ============================================================================== */
+/* 12. RESPONSIVE — Mobile (max 768px)                                            */
+/* ============================================================================== */
 @media screen and (max-width: 768px) {
     html {
         font-size: 13px !important;

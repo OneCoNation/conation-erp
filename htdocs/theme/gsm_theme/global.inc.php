@@ -9553,11 +9553,14 @@ div.login_block a {
 }
 
 .box_titre {
-    border-bottom: 1px solid var(--border-color) !important;
+    border-bottom: none !important;
     font-family: var(--font-heading) !important;
-    font-weight: 700 !important;
-    color: var(--primary-color) !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
     font-size: 1.1em;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light)) !important;
+    padding: 12px 16px !important;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0 !important;
 }
 
 /* ============================================================================== */
@@ -9617,16 +9620,16 @@ table.liste,
 
 tr.liste_titre,
 tr.liste_titre_sel {
-    background: #f8fafc !important;
+    background: linear-gradient(135deg, #843523, #a65d4d) !important;
     height: 50px !important;
 }
 
 tr.liste_titre th,
 tr.liste_titre td {
-    border-bottom: 1px solid var(--border-color) !important;
-    color: var(--text-muted) !important;
+    border-bottom: 2px solid #BFA584 !important;
+    color: #ffffff !important;
     font-family: var(--font-heading) !important;
-    font-weight: 700 !important;
+    font-weight: 800 !important;
     text-transform: uppercase;
     font-size: 0.75rem;
     letter-spacing: 0.05em;
@@ -9641,7 +9644,7 @@ tr.liste_titre td {
 }
 
 td {
-    border-bottom: 1px solid var(--border-color) !important;
+    border-bottom: 1px solid #d4c4b0 !important;
     padding: 12px 15px !important;
     vertical-align: middle !important;
     color: var(--text-main);

@@ -9519,7 +9519,12 @@ div.login_block a {
 /* 4. MAIN CONTENT CARDS — Simple individual cards (reverted)                      */
 /* ============================================================================== */
 
-#id-right div.fiche,
+#id-right div.fiche {
+    padding: 0 !important;
+    margin-bottom: 24px !important;
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
 #id-right .tabBar,
 #id-right .box {
     border: 1px solid var(--border-color) !important;
@@ -9572,7 +9577,6 @@ div.login_block a {
     padding: 0 !important;
     padding-left: 0 !important;
     text-shadow: none !important;
-    margin-bottom: 20px !important;
     clear: both;
     display: block !important;
 }

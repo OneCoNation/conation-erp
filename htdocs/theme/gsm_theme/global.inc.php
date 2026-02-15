@@ -9173,3 +9173,243 @@ div.flot-text .flot-tick-label .tickLabel, .fa-color-unset {
 	color: unset;
 
 }
+/* ============================================================================== */
+/* GSM THEME EXTENSION - MODERN UI & LAYOUT REFINEMENT                            */
+/* ============================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap');
+
+/* 1. Typography & Reset */
+html {
+    font-size: 14px !important;
+    /* Scale down global base font size (was ~16px) */
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    overflow-x: hidden !important;
+    /* Force hide horizontal scrollbar on body */
+}
+
+.titre,
+h1,
+h2,
+h3,
+h4,
+th {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+/* 2. Modern Components (Cards & Boxes) */
+div.fiche,
+.tabBar,
+.box,
+.fichehalfleft,
+.fichehalfright {
+    border-radius: 10px !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025) !important;
+    border: 1px solid #e2e8f0 !important;
+    transition: all 0.3s ease;
+}
+
+.box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 3. Inputs & Forms */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select,
+textarea {
+    padding: 8px 10px !important;
+    border-radius: 6px !important;
+    border: 1px solid #e2e8f0 !important;
+    color: var(--colortext) !important;
+    font-size: 0.95rem !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    box-shadow: 0 0 0 3px rgba(132, 53, 35, 0.1) !important;
+    border-color: #843523 !important;
+}
+
+/* Fix Select2 Contrast */
+.select2-container--default .select2-selection--single {
+    border-color: #e2e8f0 !important;
+    height: 38px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 38px !important;
+    color: var(--colortext) !important;
+}
+
+/* 4. Buttons */
+.button,
+.butAction {
+    background: linear-gradient(135deg, rgb(166, 93, 77), rgb(132, 53, 35)) !important;
+    border-radius: 6px !important;
+    box-shadow: 0 4px 14px 0 rgba(132, 53, 35, 0.39) !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600 !important;
+    padding: 8px 16px !important;
+    color: #fff !important;
+    border: none !important;
+}
+
+.buttonCancel,
+.butActionCancel {
+    background: #f3f4f6 !important;
+    color: #111827 !important;
+    box-shadow: none !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+/* 5. Start of Responsiveness & Mobile Fixes */
+.div-table-responsive,
+.div-table-responsive-no-min {
+    overflow-x: auto !important;
+    width: 100% !important;
+    display: block !important;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 15px;
+}
+
+/* 6. FLOATING SIDEBAR IMPLEMENTATION (GSM REQUEST) */
+@media screen and (min-width: 992px) {
+
+    /* Collapse Sidebar by default */
+    div.vmenu {
+        width: 60px !important;
+        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        overflow: hidden !important;
+        white-space: nowrap !important;
+        z-index: 1000 !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(10px);
+        position: fixed !important;
+        /* Floating */
+        height: 100%;
+        left: 0;
+        top: 0;
+        /* Adjust if needed based on header height */
+        padding-top: 60px !important;
+        /* Ensure content starts below header if header overlaps */
+        border-right: 1px solid #e2e8f0;
+    }
+
+    /* Expand on Hover */
+    div.vmenu:hover {
+        width: 260px !important;
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Adjust Main Content spacing */
+    div.fiche,
+    .tabBar,
+    .box,
+    #id-right,
+    .id-right {
+        margin-left: 70px !important;
+        /* 60px sidebar + 10px Gap */
+        transition: margin-left 0.3s ease;
+        max-width: calc(100vw - 80px) !important;
+        /* Prevent overflow right */
+    }
+
+    /* Hide text when collapsed */
+    div.vmenu .titre,
+    div.vmenu a.vmenu span {
+        opacity: 0;
+        transition: opacity 0.2s;
+        display: inline-block;
+    }
+
+    div.vmenu:hover .titre,
+    div.vmenu:hover a.vmenu span {
+        opacity: 1;
+        transition-delay: 0.1s;
+    }
+
+    /* Icons always visible */
+    div.vmenu a.vmenu {
+        padding-left: 18px !important;
+        /* Center icon */
+    }
+
+    /* Ensure Header is above sidebar or compatible */
+    div.tmenu {
+        z-index: 1001 !important;
+        position: relative;
+    }
+}
+
+/* Fix Container Overlaps */
+.titre {
+    margin-bottom: 24px !important;
+    clear: both;
+    /* Ensure title clears floats */
+    display: block !important;
+}
+
+.fiche {
+    margin-top: 24px !important;
+    clear: both;
+}
+
+/* Reduce Whitespace on Right */
+#id-right {
+    padding-right: 0 !important;
+    margin-right: 10px !important;
+}
+
+@media screen and (max-width: 991px) {
+    div.vmenu {
+        display: none;
+        /* Hide sidebar on mobile */
+    }
+
+    .fichehalfleft,
+    .fichehalfright {
+        width: 100% !important;
+        float: none !important;
+    }
+
+    div.fiche,
+    .box,
+    #id-right {
+        margin-left: 0 !important;
+        /* Reset margin on mobile */
+        max-width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    html {
+        font-size: 13px !important;
+    }
+
+    div.fiche,
+    .box {
+        padding: 12px !important;
+    }
+
+    .login_block {
+        display: none;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .tmenu {
+        height: 50px !important;
+    }
+}

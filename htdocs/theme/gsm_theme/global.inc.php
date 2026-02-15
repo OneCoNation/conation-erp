@@ -157,6 +157,7 @@ $leftmenuwidth = 240;
 $borderradius = getDolGlobalString('THEME_ELDY_USEBORDERONTABLE') ? getDolGlobalInt('THEME_ELDY_BORDER_RADIUS', 6) : 0;
 
 ?>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap');
 /* IDE Hack <style type="text/css"> */
 
 /* ============================================================================== */
@@ -9174,24 +9175,20 @@ div.flot-text .flot-tick-label .tickLabel, .fa-color-unset {
 
 }
 /* ============================================================================== */
-/* GSM THEME EXTENSION - MODERN UI & LAYOUT REFINEMENT                            */
+/* GSM THEME V3 - ALL AUDIT FIXES APPLIED                                         */
 /* ============================================================================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap');
 
 /* 1. Typography & Reset */
 html {
     font-size: 14px !important;
-    /* Scale down global base font size (was ~16px) */
 }
 
 body {
     font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
     overflow-x: hidden !important;
-    /* Force hide horizontal scrollbar on body */
 }
 
-.titre,
+#id-right .titre,
 h1,
 h2,
 h3,
@@ -9200,27 +9197,30 @@ th {
     font-family: 'Montserrat', sans-serif !important;
 }
 
-/* 2. Modern Components (Cards & Boxes) */
-div.fiche,
-.tabBar,
-.box,
-.fichehalfleft,
-.fichehalfright {
+/* 2. Modern Components — scoped to #id-right to avoid sidebar conflicts */
+#id-right div.fiche,
+#id-right .tabBar,
+#id-right .box,
+#id-right .fichehalfleft,
+#id-right .fichehalfright {
     border-radius: 10px !important;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025) !important;
     border: 1px solid #e2e8f0 !important;
-    transition: all 0.3s ease;
+    transition: box-shadow 0.3s ease;
 }
 
-.box:hover {
-    transform: translateY(-3px);
+#id-right .box:hover {
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* 3. Inputs & Forms */
+/* 3. Inputs & Forms — targeted types only */
 input[type="text"],
 input[type="password"],
 input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
 select,
 textarea {
     padding: 8px 10px !important;
@@ -9230,14 +9230,17 @@ textarea {
     font-size: 0.95rem !important;
 }
 
-input:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
 select:focus,
 textarea:focus {
     box-shadow: 0 0 0 3px rgba(132, 53, 35, 0.1) !important;
     border-color: #843523 !important;
 }
 
-/* Fix Select2 Contrast */
+/* Select2 Contrast Fix */
 .select2-container--default .select2-selection--single {
     border-color: #e2e8f0 !important;
     height: 38px !important;
@@ -9269,7 +9272,7 @@ textarea:focus {
     border: 1px solid #e2e8f0 !important;
 }
 
-/* 5. Start of Responsiveness & Mobile Fixes */
+/* 5. Table Responsiveness */
 .div-table-responsive,
 .div-table-responsive-no-min {
     overflow-x: auto !important;
@@ -9279,98 +9282,121 @@ textarea:focus {
     margin-bottom: 15px;
 }
 
-/* 6. FLOATING SIDEBAR IMPLEMENTATION (GSM REQUEST) */
+/* 6. ICON-ONLY SIDEBAR — Permanently collapsed, NO expand on hover */
 @media screen and (min-width: 992px) {
 
-    /* Collapse Sidebar by default */
+    /* Sidebar: fixed, icon-only, 50px wide */
     div.vmenu {
-        width: 60px !important;
-        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        width: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
         overflow: hidden !important;
         white-space: nowrap !important;
         z-index: 1000 !important;
-        background: rgba(255, 255, 255, 0.95) !important;
+        background: rgba(255, 255, 255, 0.97) !important;
         backdrop-filter: blur(10px);
         position: fixed !important;
-        /* Floating */
-        height: 100%;
+        height: calc(100vh - 50px) !important;
         left: 0;
-        top: 0;
-        /* Adjust if needed based on header height */
-        padding-top: 60px !important;
-        /* Ensure content starts below header if header overlaps */
+        top: 50px;
         border-right: 1px solid #e2e8f0;
+        padding-top: 8px !important;
     }
 
-    /* Expand on Hover */
-    div.vmenu:hover {
-        width: 260px !important;
-        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+    /* COMPLETELY HIDE all text in sidebar — icon only */
+    div.vmenu .blockvmenusearch,
+    div.vmenu .blockvmenubookmarks,
+    div.vmenu .menu_titre a span.mainmenuaspan,
+    div.vmenu span.mainmenuaspan,
+    div.vmenu .menu_contenu,
+    div.vmenu a.vmenu span,
+    div.vmenu span.vmenu,
+    div.vmenu .menu_titre .mainmenuaspan {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
     }
 
-    /* Adjust Main Content spacing */
-    div.fiche,
-    .tabBar,
-    .box,
-    #id-right,
-    .id-right {
-        margin-left: 70px !important;
-        /* 60px sidebar + 10px Gap */
+    /* Hide sidebar section titles/labels */
+    div.vmenu .titre {
+        display: none !important;
+    }
+
+    /* Hide any sub-menus in sidebar */
+    div.vmenu .menu_contenu {
+        display: none !important;
+    }
+
+    /* Keep only icons visible and centered */
+    div.vmenu .menu_titre {
+        text-align: center !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    div.vmenu .menu_titre a {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 50px !important;
+        height: 44px !important;
+        padding: 0 !important;
+        margin: 2px 0 !important;
+        border-radius: 8px;
+        transition: background-color 0.2s ease;
+    }
+
+    div.vmenu .menu_titre a:hover {
+        background-color: rgba(132, 53, 35, 0.08) !important;
+    }
+
+    div.vmenu .menu_titre a img,
+    div.vmenu .menu_titre a .picto {
+        margin: 0 auto !important;
+        display: block !important;
+    }
+
+    /* Adjust main content to account for 50px sidebar */
+    #id-right {
+        margin-left: 58px !important;
         transition: margin-left 0.3s ease;
-        max-width: calc(100vw - 80px) !important;
-        /* Prevent overflow right */
+        max-width: calc(100vw - 68px) !important;
     }
 
-    /* Hide text when collapsed */
-    div.vmenu .titre,
-    div.vmenu a.vmenu span {
-        opacity: 0;
-        transition: opacity 0.2s;
-        display: inline-block;
-    }
-
-    div.vmenu:hover .titre,
-    div.vmenu:hover a.vmenu span {
-        opacity: 1;
-        transition-delay: 0.1s;
-    }
-
-    /* Icons always visible */
-    div.vmenu a.vmenu {
-        padding-left: 18px !important;
-        /* Center icon */
-    }
-
-    /* Ensure Header is above sidebar or compatible */
-    div.tmenu {
-        z-index: 1001 !important;
+    /* Ensure header stays above sidebar */
+    div.tmenu,
+    .login_block,
+    #tmenu_tooltip,
+    .tmenu {
+        z-index: 2000 !important;
         position: relative;
     }
 }
 
-/* Fix Container Overlaps */
-.titre {
-    margin-bottom: 24px !important;
+/* 7. Fix Container Overlaps — scoped to content area */
+#id-right .titre {
+    margin-bottom: 20px !important;
     clear: both;
-    /* Ensure title clears floats */
     display: block !important;
 }
 
-.fiche {
-    margin-top: 24px !important;
+#id-right .fiche {
+    margin-top: 16px !important;
     clear: both;
 }
 
-/* Reduce Whitespace on Right */
+/* Reduce whitespace on right */
 #id-right {
     padding-right: 0 !important;
     margin-right: 10px !important;
 }
 
+/* 8. MOBILE RESPONSIVE */
 @media screen and (max-width: 991px) {
     div.vmenu {
-        display: none;
-        /* Hide sidebar on mobile */
+        display: none !important;
     }
 
     .fichehalfleft,
@@ -9379,11 +9405,10 @@ textarea:focus {
         float: none !important;
     }
 
+    #id-right,
     div.fiche,
-    .box,
-    #id-right {
+    .box {
         margin-left: 0 !important;
-        /* Reset margin on mobile */
         max-width: 100% !important;
     }
 }
@@ -9393,16 +9418,21 @@ textarea:focus {
         font-size: 13px !important;
     }
 
-    div.fiche,
-    .box {
+    #id-right div.fiche,
+    #id-right .box {
         padding: 12px !important;
     }
 
+    /* Keep login/user menu accessible on mobile — just shrink it */
     .login_block {
-        display: none;
+        font-size: 0.8rem !important;
     }
 
-    input,
+    /* Targeted input width — only text-type inputs */
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="search"],
     select,
     textarea {
         width: 100% !important;
@@ -9413,4 +9443,3 @@ textarea:focus {
         height: 50px !important;
     }
 }
-/* Verified Update V2.1 */

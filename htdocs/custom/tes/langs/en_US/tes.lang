@@ -1,0 +1,42 @@
+# Translation file
+
+#
+# Generic
+#
+
+# Module label 'ModuleTesName'
+ModuleTesName = Tes
+# Module description 'ModuleTesDesc'
+ModuleTesDesc = Tes description
+
+#
+# Admin page
+#
+TesSetup = Tes setup
+Settings = Settings
+TesSetupPage = Tes setup page
+NewSection=New section
+TES_MYPARAM1 = My param 1
+TES_MYPARAM1Tooltip = My param 1 tooltip
+TES_MYPARAM2=My param 2
+TES_MYPARAM2Tooltip=My param 2 tooltip
+
+
+#
+# About page
+#
+About = About
+TesAbout = About Tes
+TesAboutPage = Tes about page
+
+#
+# Sample page
+#
+TesArea = Home Tes
+MyPageName = My page name
+
+#
+# Sample widget
+#
+MyWidget = My widget
+MyWidgetDescription = My widget description

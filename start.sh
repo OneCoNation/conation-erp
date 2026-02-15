@@ -5,12 +5,13 @@
 # ==========================================
 echo "🚀 Starting Deployment Script..."
 
-# Pastikan folder documents ada dan bisa ditulis oleh siapa saja (777)
+# Pastikan folder documents ada
 mkdir -p /app/documents
 chmod -R 777 /app/documents
 
-# Buat folder session khusus agar User 'nobody' bisa login
+# Buat folder session
 mkdir -p /tmp/sessions
+chown -R nobody:nogroup /tmp/sessions
 chmod -R 777 /tmp/sessions
 
 # Pastikan conf.php ada
@@ -21,18 +22,11 @@ if [ ! -f "/app/htdocs/conf/conf.php" ]; then
 fi
 
 # ==========================================
-# 2. SECURITY FIXES (PENYEBAB UTAMA)
+# 2. SECURITY FIXES
 # ==========================================
 echo "🔒 Applying security fixes..."
-
-# Install Lock
 touch /app/documents/install.lock
-
-# Pastikan conf.php dimiliki oleh ROOT
 chown root:root /app/htdocs/conf/conf.php
-
-# Kunci conf.php (Hanya bisa dibaca)
-# Karena nanti PHP berjalan sebagai 'nobody', dia tidak akan bisa tembus file root ini.
 chmod 0444 /app/htdocs/conf/conf.php
 
 # ==========================================
@@ -40,17 +34,14 @@ chmod 0444 /app/htdocs/conf/conf.php
 # ==========================================
 echo "⚙️ Generating config files..."
 
-# A. Buat Config PHP-FPM (Ganti User jadi 'nobody')
+# A. Buat Config PHP-FPM (User nobody + Session Fix)
 cat > /app/php-fpm.conf <<EOF
 [global]
 error_log = /proc/self/fd/2
 daemonize = yes
 [www]
-; --- PERUBAHAN PENTING DISINI ---
-; Kita jalankan PHP sebagai user biasa (nobody), bukan root.
 user = nobody
 group = nogroup
-
 listen = 127.0.0.1:9000
 pm = dynamic
 pm.max_children = 5
@@ -59,8 +50,6 @@ pm.min_spare_servers = 1
 pm.max_spare_servers = 3
 clear_env = no
 catch_workers_output = yes
-
-; Pastikan session disimpan di tempat yang bisa ditulis user 'nobody'
 php_admin_value[session.save_path] = /tmp/sessions
 EOF
 
@@ -87,7 +76,7 @@ types {
 }
 EOF
 
-# C. Buat FASTCGI PARAMS
+# C. Buat FASTCGI PARAMS (HTTPS Fix)
 cat > /app/fastcgi_params <<EOF
 fastcgi_param  QUERY_STRING       \$query_string;
 fastcgi_param  REQUEST_METHOD     \$request_method;
@@ -98,8 +87,8 @@ fastcgi_param  REQUEST_URI        \$request_uri;
 fastcgi_param  DOCUMENT_URI       \$document_uri;
 fastcgi_param  DOCUMENT_ROOT      \$document_root;
 fastcgi_param  SERVER_PROTOCOL    \$server_protocol;
-fastcgi_param  REQUEST_SCHEME     \$scheme;
-fastcgi_param  HTTPS              \$https if_not_empty;
+fastcgi_param  REQUEST_SCHEME     https;
+fastcgi_param  HTTPS              on;
 fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;
 fastcgi_param  SERVER_SOFTWARE    nginx;
 fastcgi_param  REMOTE_ADDR        \$remote_addr;
@@ -110,7 +99,7 @@ fastcgi_param  SERVER_NAME        \$server_name;
 fastcgi_param  REDIRECT_STATUS    200;
 EOF
 
-# D. Buat Config NGINX Utama
+# D. Buat Config NGINX Utama (REVISI BLOKIR)
 cat > /app/nginx.conf <<EOF
 worker_processes 1;
 events { worker_connections 1024; }
@@ -121,8 +110,6 @@ http {
     keepalive_timeout 65;
     access_log /dev/stdout;
     error_log /dev/stderr;
-    
-    # Client Max Body Size (Penting untuk upload file besar di Dolibarr)
     client_max_body_size 20M;
 
     server {
@@ -131,7 +118,10 @@ http {
         root /app/htdocs;
         index index.php index.html;
 
-        location ~ ^/(conf|includes|install|custom|documents)/ {
+        # --- [REVISI PENTING DISINI] ---
+        # Hanya blokir conf dan documents (upload rahasia).
+        # SAYA HAPUS 'includes', 'custom', dan 'install' dari daftar blokir.
+        location ~ ^/(conf|documents)/ {
             deny all;
         }
 
@@ -152,9 +142,5 @@ EOF
 # 4. JALANKAN SERVICE
 # ==========================================
 echo "✅ Starting Services..."
-
-# PHP-FPM dijalankan tanpa flag '-R' (Allow Root) karena kita sudah set user nobody di config
 php-fpm -y /app/php-fpm.conf
-
-# Nginx tetap dijalankan sebagai root (default), dia cuma oper request ke PHP
 nginx -c /app/nginx.conf -g "daemon off;"

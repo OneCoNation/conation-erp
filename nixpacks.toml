@@ -1,3 +1,7 @@
+# File: nixpacks.toml
+# Final Configuration for Dolibarr on Railway
+# Optimized by Gemini
+
 providers = ["php"]
 
 [phases.setup]
@@ -11,9 +15,9 @@ nixPkgs = [
     "php83Extensions.zip", 
     "php83Extensions.mbstring", 
     "php83Extensions.imap", 
-    "php83Extensions.xml",      # Penting untuk Dolibarr API/Import
-    "php83Extensions.soap",     # Penting untuk Web Services
-    "php83Extensions.calendar", # Penting untuk modul Agenda
+    "php83Extensions.xml",      # Wajib untuk API & Import/Export
+    "php83Extensions.soap",     # Wajib untuk Web Services
+    "php83Extensions.calendar", # Wajib untuk Modul Agenda
     "nginx", 
     "libmysqlclient", 
     "nodejs_18"
@@ -22,24 +26,24 @@ nixLibs = ["libmysqlclient"]
 
 [phases.install]
 cmds = [
-    # Membuat folder log Nginx
+    # 1. Buat folder Log Nginx agar tidak error saat start
     "mkdir -p /var/log/nginx",
     "mkdir -p /var/cache/nginx",
     
-    # Membuat folder dokumen & File Kunci (PENTING!)
+    # 2. Buat folder Dokumen (Titik Mount Volume)
     "mkdir -p /app/documents",
+    
+    # 3. Buat file install.lock (Untuk jaga-jaga jika Volume belum di-mount)
     "touch /app/documents/install.lock",
     
-    # Memberikan izin tulis penuh ke folder dokumen
-    "chmod -R 777 /app/documents",
-    
-    # Memberikan izin eksekusi ke script start (jika ada)
-    "chmod +x /app/start.sh"
+    # 4. Berikan izin FULL (Read/Write) ke folder dokumen agar bisa upload logo/faktur
+    "chmod -R 777 /app/documents"
 ]
 
 [variables]
+# Memberitahu Nixpacks bahwa kode utama ada di folder htdocs
 NIXPACKS_PHP_ROOT_DIR = "htdocs"
 NIXPACKS_PHP_FALLBACK_VERSION = "8.3"
 
-[start]
-cmd = "bash /app/start.sh"
+# CATATAN: Bagian [start] DIHAPUS agar menggunakan default Nginx dari Nixpacks.
+# Ini jauh lebih stabil dan minim error 502 Bad Gateway.
